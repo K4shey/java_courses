@@ -17,6 +17,7 @@ public class Solution {
         System.out.println("Enter destination filename:");
         String destinationFileName = scanner.nextLine();
         try (InputStream inputStream = Files.newInputStream(Paths.get(sourceFileName));
+//        try (FileInputStream inputStream = new FileInputStream(sourceFileName);
              OutputStream outputStream = Files.newOutputStream(Paths.get(destinationFileName))){
             byte[] array = new byte[2];
             while (inputStream.available() > 0) {
