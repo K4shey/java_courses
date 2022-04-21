@@ -15,8 +15,10 @@ public class Main implements ActionListener {
 
     public static void main(String[] args) throws IOException  {
 
-        Main mainClass = new Main();
-        mainClass.go();
+//        Main mainClass = new Main();
+//        mainClass.go();
+
+
 
 
 //        int primitive = 5;
