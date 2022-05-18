@@ -22,12 +22,9 @@ public class Solution implements Serializable {
             Solution newObject = new Solution();
             objectOutputStream.writeObject(newObject);
 
-
         } catch (Exception e) {
             System.out.println("Something went wrong " + e);
         }
-
-
     }
 }
 
