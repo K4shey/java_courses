@@ -1,7 +1,117 @@
 package com.javarush.task.task23.task2312;
 
-public class Room {
-    public static void main(String[] args) {
+import java.util.List;
 
+public class Room {
+
+    public static Room game;
+
+    private int width;
+    private int height;
+    private Snake snake;
+    private Mouse mouse;
+
+    public Room(int width, int height, Snake snake) {
+        this.width = width;
+        this.height = height;
+        this.snake = snake;
+    }
+
+    public static void main(String[] args) {
+        Snake snake = new Snake(10, 10);
+        snake.setDirection(SnakeDirection.DOWN);
+        game = new Room(20, 20, snake);
+        game.createMouse();
+        game.run();
+
+    }
+
+    public void run() {
+        print();
+        sleep();
+    }
+
+    public void print() {
+
+        int[][] matrix = new int[height][width];
+        List<SnakeSection> sections = snake.getSections();
+        for (int i = 0; i < sections.size(); i++) {
+            matrix[sections.get(i).getY()][sections.get(i).getX()] = i == 0 ? 2 : 1;
+        }
+        matrix[mouse.getY()][mouse.getX()] = 3;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (matrix[i][j] == 0) {
+                    System.out.print(".");
+                } else if (matrix[i][j] == 1) {
+                    System.out.print("x");
+                } else if (matrix[i][j] == 2) {
+                    System.out.print("X");
+                } else if (matrix[i][j] == 3) {
+                    System.out.print("^");
+                }
+            }
+            System.out.println();
+        }
+
+
+    }
+
+    public void sleep(){
+        long pauseValue = 0;
+        if (snake.getSections().size() <= 10) {
+            pauseValue = 500 - (snake.getSections().size() - 1) * 20L;
+        } else if (snake.getSections().size() >= 11 && snake.getSections().size() < 15) {
+            pauseValue = 325 - (snake.getSections().size() % 10) * 25L;
+        } else {
+            pauseValue = 200L;
+        }
+        try {
+            Thread.sleep(pauseValue);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void createMouse() {
+        int x = (int) (Math.random() * width);
+        int y = (int) (Math.random() * height);
+        mouse = new Mouse(x, y);
+    }
+
+    public void eatMouse() {
+        createMouse();
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public Snake getSnake() {
+        return snake;
+    }
+
+    public void setSnake(Snake snake) {
+        this.snake = snake;
+    }
+
+    public Mouse getMouse() {
+        return mouse;
+    }
+
+    public void setMouse(Mouse mouse) {
+        this.mouse = mouse;
     }
 }
