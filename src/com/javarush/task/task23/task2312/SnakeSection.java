@@ -19,11 +19,23 @@ public class SnakeSection {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+//        return super.hashCode();
+        int result = x;
+        result = 31 * result + y;
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+//        return super.equals(obj);
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        SnakeSection that = (SnakeSection) obj;
+
+        if (x != that.x) return false;
+        if (y != that.y) return false;
+
+        return true;
     }
 }

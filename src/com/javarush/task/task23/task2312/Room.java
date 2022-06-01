@@ -1,6 +1,7 @@
 package com.javarush.task.task23.task2312;
 
 import java.util.List;
+import java.awt.event.KeyEvent;
 
 public class Room {
 
@@ -23,12 +24,41 @@ public class Room {
         game = new Room(20, 20, snake);
         game.createMouse();
         game.run();
-
     }
 
     public void run() {
-        print();
-        sleep();
+
+        //Создаем объект "наблюдатель за клавиатурой" и стартуем его.
+        KeyboardObserver keyboardObserver = new KeyboardObserver();
+        keyboardObserver.start();
+
+        //пока змея жива
+        while (snake.isAlive()) {
+            //"наблюдатель" содержит события о нажатии клавиш?
+            if (keyboardObserver.hasKeyEvents()) {
+                KeyEvent event = keyboardObserver.getEventFromTop();
+                //Если равно символу 'q' - выйти из игры.
+                if (event.getKeyChar() == 'q') return;
+
+                //Если "стрелка влево" - сдвинуть фигурку влево
+                if (event.getKeyCode() == KeyEvent.VK_LEFT)
+                    snake.setDirection(SnakeDirection.LEFT);
+                    //Если "стрелка вправо" - сдвинуть фигурку вправо
+                else if (event.getKeyCode() == KeyEvent.VK_RIGHT)
+                    snake.setDirection(SnakeDirection.RIGHT);
+                    //Если "стрелка вверх" - сдвинуть фигурку вверх
+                else if (event.getKeyCode() == KeyEvent.VK_UP)
+                    snake.setDirection(SnakeDirection.UP);
+                    //Если "стрелка вниз" - сдвинуть фигурку вниз
+                else if (event.getKeyCode() == KeyEvent.VK_DOWN)
+                    snake.setDirection(SnakeDirection.DOWN);
+            }
+
+            snake.move();   //двигаем змею
+            print();        //отображаем текущее состояние игры
+            sleep();        //пауза между ходами
+        }
+        System.out.println("Game over!");
     }
 
     public void print() {
@@ -45,15 +75,18 @@ public class Room {
                 if (matrix[i][j] == 0) {
                     System.out.print(".");
                 } else if (matrix[i][j] == 1) {
-                    System.out.print("x");
+                    System.out.print("#");
                 } else if (matrix[i][j] == 2) {
-                    System.out.print("X");
+                    System.out.print("@");
                 } else if (matrix[i][j] == 3) {
-                    System.out.print("^");
+                    System.out.print("&");
                 }
             }
             System.out.println();
         }
+//        System.out.println();
+//        System.out.println();
+//        System.out.println();
     }
 
     public void sleep() {
