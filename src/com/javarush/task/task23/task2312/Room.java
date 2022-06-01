@@ -40,6 +40,7 @@ public class Room {
         }
         matrix[mouse.getY()][mouse.getX()] = 3;
         for (int i = 0; i < height; i++) {
+
             for (int j = 0; j < width; j++) {
                 if (matrix[i][j] == 0) {
                     System.out.print(".");
@@ -53,11 +54,9 @@ public class Room {
             }
             System.out.println();
         }
-
-
     }
 
-    public void sleep(){
+    public void sleep() {
         long pauseValue = 0;
         if (snake.getSections().size() <= 10) {
             pauseValue = 500 - (snake.getSections().size() - 1) * 20L;
