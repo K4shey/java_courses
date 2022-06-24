@@ -25,4 +25,9 @@ public class MainModel implements Model {
         modelData.setUsers(users);
     }
 
+    public void loadUserByID(long userId) {
+        User user = userService.getUsersById(userId);
+        modelData.setActiveUser(user);
+    }
+
 }

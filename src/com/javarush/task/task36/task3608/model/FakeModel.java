@@ -27,4 +27,8 @@ public class FakeModel implements Model {
     public void loadDeletedUsers() {
         throw new UnsupportedOperationException();
     }
+
+    public void loadUserByID(long userId) {
+        throw new UnsupportedOperationException();
+    }
 }
