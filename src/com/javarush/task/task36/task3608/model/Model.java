@@ -5,4 +5,5 @@ public interface Model {
     void loadUsers();
     void loadDeletedUsers();
     void loadUserByID(long userId);
+    void deleteUserById(long id);
 }
