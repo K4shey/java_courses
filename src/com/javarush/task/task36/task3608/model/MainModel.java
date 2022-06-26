@@ -41,4 +41,9 @@ public class MainModel implements Model {
         return userService.filterOnlyActiveUsers(users);
     }
 
+    public void changeUserData(String name, long id, int level) {
+        userService.createOrUpdateUser(name, id, level);
+        loadUsers();
+    }
+
 }
