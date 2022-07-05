@@ -21,6 +21,20 @@ public class Human {
     public static final int FOURTH = 4;
     private int bloodGroup;
 
+    private List<Human> children = new ArrayList<>();
+
+    public List<Human> getChildren() {
+        return Collections.unmodifiableList(children);
+    }
+
+    public void addChild(Human child) {
+        children.add(child);
+    }
+
+    public void removeChild(Human child) {
+        children.remove(child);
+    }
+
     public void setBloodGroup(int code) {
         bloodGroup = code;
     }
