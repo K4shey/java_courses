@@ -2,7 +2,7 @@ package com.javarush.task.task29.task2909.car;
 
 import java.util.Date;
 
-public class Car {
+abstract public class Car {
     static public final int TRUCK = 0;
     static public final int SEDAN = 1;
     static public final int CABRIOLET = 2;
@@ -46,7 +46,7 @@ public class Car {
     }
 
     public boolean isSummer(Date date, Date summerStart, Date summerEnd) {
-        return (!(date.before(summerStart)  || date.after(summerEnd)));
+        return (!(date.before(summerStart) || date.after(summerEnd)));
     }
 
     public double getWinterConsumption(int length) {
@@ -64,21 +64,20 @@ public class Car {
         } else {
             consumption = getWinterConsumption(length);
         }
-//        if (date.before(SummerStart) || date.after(SummerEnd)) {
-//            consumption = length * winterFuelConsumption + winterWarmingUp;
-//        } else {
-//            consumption = length * summerFuelConsumption;
-//        }
         return consumption;
     }
 
-    public int getNumberOfPassengersCanBeTransferred() {
-        if (!isDriverAvailable())
-            return 0;
-        if (fuel <= 0)
-            return 0;
+    private boolean canPassengersBeTransferred() {
+        return isDriverAvailable() && fuel > 0;
+    }
 
-        return numberOfPassengers;
+    public int getNumberOfPassengersCanBeTransferred() {
+
+        if (canPassengersBeTransferred()) {
+            return numberOfPassengers;
+        } else {
+            return 0;
+        }
     }
 
     public boolean isDriverAvailable() {
@@ -90,11 +89,10 @@ public class Car {
     }
 
     public void startMoving() {
+
+        fastenDriverBelt();
         if (numberOfPassengers > 0) {
             fastenPassengersBelts();
-            fastenDriverBelt();
-        } else {
-            fastenDriverBelt();
         }
     }
 
@@ -104,13 +102,7 @@ public class Car {
     public void fastenDriverBelt() {
     }
 
-    public int getMaxSpeed() {
-        if (type == TRUCK)
-            return 80;
-        if (type == SEDAN)
-            return 120;
-        return 90;
-    }
+    abstract public int getMaxSpeed();
 }
 
 
