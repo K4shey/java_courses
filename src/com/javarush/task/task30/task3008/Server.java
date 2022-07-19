@@ -43,11 +43,14 @@ public class Server {
             while (true) {
                 connection.send(new Message(MessageType.NAME_REQUEST));
                 Message message = connection.receive();
-                if (message.getType().equals(MessageType.USER_NAME) && (!message.getData().equals(""))) {
-                    if (!connectionMap.containsKey(message.getData())) {
-                        connectionMap.put(message.getData(), connection);
-                        connection.send(new Message(MessageType.NAME_ACCEPTED));
-                        return message.getData();
+                if (message.getType().equals(MessageType.USER_NAME)) {
+                    String name = message.getData();
+                    if (!name.equals("")) {
+                        if (!connectionMap.containsKey(name)) {
+                            connectionMap.put(name, connection);
+                            connection.send(new Message(MessageType.NAME_ACCEPTED));
+                            return name;
+                        }
                     }
                 }
             }
