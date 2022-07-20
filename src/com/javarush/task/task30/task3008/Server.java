@@ -3,6 +3,7 @@ package com.javarush.task.task30.task3008;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -76,7 +77,20 @@ public class Server {
             }
         }
 
-
+        public void run() {
+            SocketAddress socketAddress = socket.getRemoteSocketAddress();
+            ConsoleHelper.writeMessage("Set new connection with remote address " + socketAddress);
+            try (Connection connection = new Connection(socket)) {
+                String userName = serverHandshake(connection);
+                Server.sendBroadcastMessage(new Message(MessageType.USER_ADDED, userName));
+                notifyUsers(connection, userName);
+                serverMainLoop(connection, userName);
+                connectionMap.remove(userName);
+                Server.sendBroadcastMessage(new Message(MessageType.USER_REMOVED, userName));
+            } catch (IOException | ClassNotFoundException e) {
+                ConsoleHelper.writeMessage("Communication error with remote address!");
+            }
+        }
     }
 }
 
