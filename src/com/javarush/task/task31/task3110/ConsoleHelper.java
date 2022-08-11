@@ -10,13 +10,14 @@ public class ConsoleHelper {
     }
 
     public static String readString() throws IOException {
-        String result = "";
+        String result = null;
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         ) {
-            if (bufferedReader.ready()) {
-                result = bufferedReader.readLine();
+            while (result == null) {
+                if (bufferedReader.ready()) {
+                    result = bufferedReader.readLine();
+                }
             }
-
         }
         return result;
     }
