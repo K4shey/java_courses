@@ -51,4 +51,8 @@ public class View extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    public void selectedTabChanged() {
+
+    }
+
 }
