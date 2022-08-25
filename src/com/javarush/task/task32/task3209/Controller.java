@@ -30,6 +30,13 @@ public class Controller {
         System.exit(0);
     }
 
+    public HTMLDocument getDocument() {
+        return document;
+    }
+
+    public void setDocument(HTMLDocument document) {
+        this.document = document;
+    }
 }
 
 
