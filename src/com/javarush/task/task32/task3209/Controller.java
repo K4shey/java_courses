@@ -1,9 +1,12 @@
 package com.javarush.task.task32.task3209;
 
+import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 
 public class Controller {
 
@@ -48,6 +51,18 @@ public class Controller {
         document = (HTMLDocument) htmlEditorKit.createDefaultDocument();
         document.addUndoableEditListener(view.getUndoListener());
         view.update();
+    }
+
+    public void setPlainText(String text) {
+        resetDocument();
+        StringReader stringReader = new StringReader(text);
+        HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+        try {
+            htmlEditorKit.read(stringReader, document, 0);
+        }
+        catch (Exception e) {
+            ExceptionHandler.log(e);
+        }
     }
 }
 
