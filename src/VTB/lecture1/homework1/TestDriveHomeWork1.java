@@ -9,24 +9,22 @@ public class TestDriveHomeWork1 {
         Animal[] zoo = new Animal[]{
                 new Dog("Cooper"),
                 new Dog("Buster"),
-                new Cat("Smokey"),
-                new Cat("Gracie")
+                new DomesticCat("Smokey"),
+                new DomesticCat("Gracie"),
+                new Tiger("Shere Khan")
+
         };
 
         for (Animal animal : zoo) {
-
-            if (animal instanceof Cat) {
-                catCount++;
-            } else if (animal instanceof Dog) {
-                dogCount++;
-            }
 
             animal.run(100);
             animal.swim(3);
         }
 
-        System.out.println(dogCount + " dogs was processed");
-        System.out.println(catCount + " cats was processed");
+        System.out.println(Dog.counter + " dogs was processed");
+        System.out.println(DomesticCat.counter + " cats was processed");
+        System.out.println(Tiger.counter + " tigers was processed");
+        System.out.println(Animal.counter + " animals was processed");
 
     }
 }
