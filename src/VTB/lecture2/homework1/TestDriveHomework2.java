@@ -13,15 +13,8 @@ public class TestDriveHomework2 {
         Obstacle[] arrayObstacles = new Obstacle[]{wall, track};
         for (Movable movable : arrayCreatures) {
             for (Obstacle obstacle : arrayObstacles) {
-                if (obstacle.getLength() > 0) {
-                    if (movable.run(obstacle.getLength()) == false) {
-                        break;
-                    }
-                }
-                if (obstacle.getHeight() > 0) {
-                    if (movable.jump(obstacle.getHeight()) == false) {
-                        break;
-                    }
+                if (!obstacle.contest(movable)) {
+                    break;
                 }
             }
         }
