@@ -1,17 +1,17 @@
 package VTB.lecture1.homework1;
 
-public class Dog extends Animal {
+public class DomesticCat extends Cat {
 
     static int counter;
 
-    public Dog(String name) {
+    public DomesticCat(String name) {
         super(name);
         counter++;
     }
 
     @Override
     public void run(int distance) {
-        if (distance > 0 && distance < 500) {
+        if (distance > 0 && distance < 200) {
             System.out.println(name + " ran " + distance + " meters.");
         } else {
             System.out.println("Distance " + distance + " is too large for " + name + "!");
@@ -20,11 +20,6 @@ public class Dog extends Animal {
 
     @Override
     public void swim(int distance) {
-        if (distance > 0 && distance < 10) {
-            System.out.println(name + " swam " + distance + " meters.");
-        } else {
-            System.out.println("Distance " + distance + " is too large for " + name + "!");
-        }
+        System.out.println("Cats can't swim!");
     }
-
 }
