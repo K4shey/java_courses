@@ -65,7 +65,7 @@ public class TestDriveHomeWork1 {
                 try {
                     result += Integer.parseInt(array[i][j]);
                 } catch (NumberFormatException nfe) {
-                    throw new MyArrayDataException("Wrong data in position [" + i + "," + j + "]  of array");
+                    throw new MyArrayDataException(i,j,array[i][j]);
                 }
             }
         }
