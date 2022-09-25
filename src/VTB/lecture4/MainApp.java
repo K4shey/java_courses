@@ -11,7 +11,7 @@ public class MainApp {
 
         String valueFromTestGenericStr = testGenericStr.getObj();
         Integer valueFromTestGenericInt = testGenericInt.getObj();
-//        testGenericInt.setObj("Test"); Не скомпилируюется, т.к. ожидается значение типа Integer
+//        testGenericInt.setObj("Test"); Не скомпилируется, т.к. ожидается значение типа Integer
     }
 }
 
