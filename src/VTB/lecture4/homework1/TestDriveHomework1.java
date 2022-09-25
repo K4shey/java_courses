@@ -20,9 +20,9 @@ public class TestDriveHomework1 {
         exchangeElements(secondArray, 1, 3);
         System.out.println(Arrays.toString(secondArray));
 
-        List<String> firstArrayList = convertArrayToArrayList(firstArray);
+        ArrayList<String> firstArrayList = convertArrayToArrayList(firstArray);
         System.out.println(firstArrayList.toString());
-        List<Float> secondArrayList = convertArrayToArrayList(secondArray);
+        ArrayList<Float> secondArrayList = convertArrayToArrayList(secondArray);
         System.out.println(secondArrayList.toString());
 
         Box<Orange> orangeBox = new Box<>();
@@ -37,12 +37,12 @@ public class TestDriveHomework1 {
 
     }
 
-    public static <T> List<T> convertArrayToArrayList(T[] array) {
-        return Arrays.asList(array);
+    public static <T> ArrayList<T> convertArrayToArrayList(T[] array) {
+        return new ArrayList<T>(Arrays.asList(array));
     }
 
-    public static <T> void exchangeElements(T[] array, int indexFirst, int indexSecond) {
-        T temp = array[indexFirst];
+    public static void exchangeElements(Object[] array, int indexFirst, int indexSecond) {
+        Object temp = array[indexFirst];
         array[indexFirst] = array[indexSecond];
         array[indexSecond] = temp;
     }

@@ -10,11 +10,7 @@ public class Box<T extends Fruit> {
     }
 
     public float getWeight(){
-        float sum = 0;
-        for (T element : list) {
-            sum += element.getWeight();
-        }
-        return sum;
+        return list.size() * list.get(0).getWeight();
     }
 
     public boolean compare(Box<? extends T> o){
@@ -22,9 +18,7 @@ public class Box<T extends Fruit> {
     }
 
     public void sprinkle (Box<T> box){
-        for (T element : list) {
-            box.addFruit(element);
-        }
+        box.list.addAll(list);
         this.list.clear();
     }
 
