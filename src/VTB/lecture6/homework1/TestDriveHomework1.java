@@ -44,9 +44,9 @@ public class TestDriveHomework1 {
         Thread thread2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < array2.length; i++) {
-                    array2[i] = (float) (array2[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5)
-                            * Math.cos(0.4f + i / 2));
+                for (int i = 0, j = HALF; i < array2.length; i++, j++) {
+                    array2[i] = (float) (array2[i] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5)
+                            * Math.cos(0.4f + j / 2));
                 }
 
             }
