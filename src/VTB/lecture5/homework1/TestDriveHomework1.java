@@ -8,9 +8,6 @@ public class TestDriveHomework1 {
 
     public static void main(String[] args) {
         String[] array = new String[]{"bear", "monkey", "dog", "cat", "crocodile", "monkey", "cat", "cat"};
-        Set<String> uniqueWords = new HashSet<>(Arrays.asList(array));
-        System.out.println(uniqueWords);
-
         Map<String, Integer> countWords = new HashMap<>();
         for (String element : array) {
             if (countWords.containsKey(element)) {
@@ -19,12 +16,16 @@ public class TestDriveHomework1 {
                 countWords.put(element, 1);
             }
         }
+        System.out.println("Unique words:");
+        System.out.println(countWords.keySet());
+        System.out.println("Words counter:");
         System.out.println(countWords);
 
         initializePhoneBook();
         getNumbersBySurname("Ivanov");
         getNumbersBySurname("Kuzmin");
         getNumbersBySurname("Petrov");
+        getNumbersBySurname("Petroff");
 
     }
 
@@ -40,9 +41,14 @@ public class TestDriveHomework1 {
 
     public static void getNumbersBySurname(String surname) {
         System.out.println("Surname:" + surname);
-        System.out.println("Phone number(s):");
-        for (String element : phoneBook.get(surname)) {
-            System.out.println(element);
+        Set<String> phonesSet = phoneBook.get(surname);
+        if (phonesSet != null) {
+            System.out.println("Phone number(s):");
+            for (String element : phoneBook.get(surname)) {
+                System.out.println(element);
+            }
+        } else {
+            System.out.println("No phone numbers for this surname, sorry.");
         }
     }
 }
