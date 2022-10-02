@@ -1,12 +1,14 @@
 package VTB.lecture7.homework1;
 
 import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Car implements Runnable {
 
     private static int CAR_COUNT;
-
+    private static AtomicInteger atomicInteger = new AtomicInteger();
     static {
         CAR_COUNT = 0;
     }
@@ -15,6 +17,7 @@ public class Car implements Runnable {
     private int speed;
     private String name;
     private CyclicBarrier cb;
+    private CountDownLatch cdl;
 
     public String getName() {
         return name;
@@ -24,12 +27,13 @@ public class Car implements Runnable {
         return speed;
     }
 
-    public Car(Race race, int speed, CyclicBarrier cb) {
+    public Car(Race race, int speed, CyclicBarrier cb, CountDownLatch cdl) {
         this.race = race;
         this.speed = speed;
         CAR_COUNT++;
         this.name = "Участник #" + CAR_COUNT;
         this.cb = cb;
+        this.cdl = cdl;
     }
 
     @Override
@@ -45,9 +49,9 @@ public class Car implements Runnable {
         for (int i = 0; i < race.getStages().size(); i++) {
             race.getStages().get(i).go(this);
         }
-        if (MainClass.countDownLatch.getCount() == MainClass.CARS_COUNT) {
+        cdl.countDown();
+        if (atomicInteger.getAndIncrement() == 0) {
             System.out.println(this.name + " - WIN");
         }
-        MainClass.countDownLatch.countDown();
     }
 }
