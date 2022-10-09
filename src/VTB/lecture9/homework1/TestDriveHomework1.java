@@ -1,23 +1,40 @@
 package VTB.lecture9.homework1;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
 
 public class TestDriveHomework1 {
 
     private static Connection connection = null;
     private static Statement statement = null;
+    private static String tableName = null;
+    private static PreparedStatement preparedStatement = null;
 
     public static void main(String[] args) {
 
         init();
-        createTable();
-        addRow();
+        createTable(Cat.class);
+//        ArrayList<Object> students = new ArrayList<>();
+//        students.add(new Student("Bob", 5));
+//        students.add(new Student("Ann", 3));
+//        students.add(new Student("John", 2));
+//        students.add(new Student("Beth", 7));
+//        students.add(new Student("Garry", 4));
+//        addRows(students);
+        ArrayList<Object> cats = new ArrayList<>();
+        cats.add(new Cat("Bob", 5.5, 4));
+        cats.add(new Cat("Ann", 3.3, 3));
+        cats.add(new Cat("John",2.2, 2));
+        cats.add(new Cat("Beth", 5.7, 7));
+        cats.add(new Cat("Garry",4.2,  4));
+        addRows(cats);
 
         try {
+            preparedStatement.close();
+            statement.close();
             connection.close();
             System.out.println("Connection is closed");
         } catch (SQLException e) {
@@ -29,7 +46,7 @@ public class TestDriveHomework1 {
     public static void init() {
         try {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:d:\\Portable\\sqlite\\students.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:d:\\Portable\\sqlite\\test.db");
             statement = connection.createStatement();
             System.out.println("Connected successfully");
         } catch (ClassNotFoundException | SQLException e) {
@@ -37,34 +54,58 @@ public class TestDriveHomework1 {
         }
     }
 
-    public static void createTable() {
+    public static void createTable(Class inputClass) {
         AnnotationsHandler annotationsHandler = new AnnotationsHandler();
-        String tableName = annotationsHandler.handleTable(Student.class);
-        List<String> fieldsList = annotationsHandler.handleColumns(Student.class);
-        if (!tableName.equals("")) {
-            StringBuilder text = new StringBuilder("CREATE TABLE IF NOT EXISTS ").append(tableName).append(" (").append("\n");
-            for (int i = 0; i < fieldsList.size(); i++) {
-                text.append(fieldsList.get(i));
-                if (i < fieldsList.size() - 1) {
-                    text.append(",\n");
-                }
+//        tableName = annotationsHandler.handleTable(Student.class);
+        tableName = annotationsHandler.handleTable(inputClass);
+//        List<String> fieldsList = annotationsHandler.handleColumns(Student.class);
+        List<String> fieldsList = annotationsHandler.handleColumns(inputClass);
+        StringBuilder text = new StringBuilder("CREATE TABLE IF NOT EXISTS ").append(tableName).append(" (").append("\n");
+        text.append("id INTEGER PRIMARY KEY AUTOINCREMENT, ").append("\n");
+        for (int i = 0; i < fieldsList.size(); i++) {
+            text.append(fieldsList.get(i));
+            if (i < fieldsList.size() - 1) {
+                text.append(",\n");
             }
-            text.append("\n);");
-            System.out.println(text.toString());
+        }
+        text.append("\n);");
+        System.out.println(text);
+        try {
+            statement.executeUpdate(text.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void addRows(ArrayList<Object> arrayList) {
+        AnnotationsHandler annotationsHandler = new AnnotationsHandler();
+        for (int i = 0; i < arrayList.size(); i++) {
+            HashMap<String, Object> fields = annotationsHandler.HandleObject(arrayList.get(i));
+            StringBuilder text = new StringBuilder("INSERT INTO ").append(tableName).append(" (");
+            for (String field : fields.keySet()) {
+                text.append(field).append(", ");
+            }
+            text.delete(text.length() - 2, text.length());
+            text.append(") VALUES (");
+            for (Object value : fields.values()) {
+                text.append("?").append(", ");
+            }
+            text.setLength(text.length() - 2);
+            text.append(");");
             try {
-                statement.executeUpdate(text.toString());
+                preparedStatement = connection.prepareStatement(text.toString());
+                int index = 1;
+                for (String key : fields.keySet()) {
+                    preparedStatement.setObject(index, fields.get(key));
+                    index++;
+                }
+                preparedStatement.addBatch();
+                preparedStatement.executeBatch();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public static void addRow() {
-        String text = "INSERT INTO students (name, score, rate) VALUES ('Bob', 15, 6.5);";
-        try {
-            statement.executeUpdate(text);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(text);
         }
     }
 }

@@ -1,13 +1,14 @@
 package VTB.lecture9.homework1;
 
-@Table(title = "students")
+//@Table(title = "students")
 public class Student {
-
-    @Column
+  //  @Column
     String name;
-    @Column
+    //@Column
     int score;
-    @Column
-    float rate;
 
+    public Student(String name, int score) {
+        this.name = name;
+        this.score = score;
+    }
 }
