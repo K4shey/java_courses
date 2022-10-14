@@ -67,7 +67,8 @@ public class TestDriveHomework1 {
         }
 
         if (connection == null) {
-            String url = "jdbc:postgresql://localhost:5433/testdb";
+//            String url = "jdbc:postgresql://localhost:5433/testdb";
+            String url = "jdbc:postgresql://localhost:5432/testdb";
             String user = "postgres";
             String password = "12345";
 
@@ -99,26 +100,26 @@ public class TestDriveHomework1 {
     public static void initializeTables() {
         try {
 
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS students (id integer PRIMARY KEY, name text, passport_series integer, passport_number integer," +
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS students (id serial not null, name text not null, passport_series integer not null, passport_number integer not null," +
                     " UNIQUE (passport_series, passport_number));");
-            statement.executeUpdate("INSERT INTO students VALUES (1, 'John', 333,4546);");
-            statement.executeUpdate("INSERT INTO students VALUES (2, 'Paul', 333,4547);");
-            statement.executeUpdate("INSERT INTO students VALUES (3, 'Joel', 334,4546);");
-            statement.executeUpdate("INSERT INTO students VALUES (4, 'Ringo', 334,4548);");
+            statement.executeUpdate("INSERT INTO students (name, passport_series, passport_number) VALUES ('John', 333,4546);");
+            statement.executeUpdate("INSERT INTO students (name, passport_series, passport_number) VALUES ('Paul', 333,4547);");
+            statement.executeUpdate("INSERT INTO students (name, passport_series, passport_number) VALUES ('Joel', 334,4546);");
+            statement.executeUpdate("INSERT INTO students (name, passport_series, passport_number) VALUES ('Ringo', 334,4548);");
 
-            statement.executeUpdate("CREATE TABLE  IF NOT EXISTS subjects (id integer PRIMARY KEY, name text);");
-            statement.executeUpdate("INSERT INTO subjects VALUES (1, 'Math');");
-            statement.executeUpdate("INSERT INTO subjects VALUES (2, 'Physics');");
-            statement.executeUpdate("INSERT INTO subjects VALUES (3, 'Chemistry');");
+            statement.executeUpdate("CREATE TABLE  IF NOT EXISTS subjects (id serial not null, name text);");
+            statement.executeUpdate("INSERT INTO subjects (name) VALUES ('Math');");
+            statement.executeUpdate("INSERT INTO subjects (name) VALUES  ('Physics');");
+            statement.executeUpdate("INSERT INTO subjects (name) VALUES  ('Chemistry');");
 
-            statement.executeUpdate("CREATE TABLE  IF NOT EXISTS progress (id integer PRIMARY KEY, student_id integer REFERENCES students (id) ON DELETE CASCADE" +
-                    ", subject_id integer REFERENCES subjects (id), mark smallint CHECK (mark >= 2 AND mark < 6));");
-            statement.executeUpdate("INSERT INTO progress VALUES (1, 1, 1, 5);");
-            statement.executeUpdate("INSERT INTO progress VALUES (2, 2, 1, 2);");
-            statement.executeUpdate("INSERT INTO progress VALUES (3, 1, 2, 5);");
-            statement.executeUpdate("INSERT INTO progress VALUES (4, 1, 3, 2);");
-            statement.executeUpdate("INSERT INTO progress VALUES (5, 4, 3, 4);");
-            statement.executeUpdate("INSERT INTO progress VALUES (6, 3, 1, 3);");
+            statement.executeUpdate("CREATE TABLE  IF NOT EXISTS progress (id serial not null, student_id integer REFERENCES students (id) ON DELETE CASCADE not null" +
+                    ", subject_id integer REFERENCES subjects (id) not null, mark smallint CHECK (mark >= 2 AND mark < 6) not null);");
+            statement.executeUpdate("INSERT INTO progress (student_id, subject_id, mark) VALUES (1, 1, 5);");
+            statement.executeUpdate("INSERT INTO progress (student_id, subject_id, mark) VALUES  (2, 1, 2);");
+            statement.executeUpdate("INSERT INTO progress (student_id, subject_id, mark) VALUES  (1, 2, 5);");
+            statement.executeUpdate("INSERT INTO progress (student_id, subject_id, mark) VALUES  (1, 3, 2);");
+            statement.executeUpdate("INSERT INTO progress (student_id, subject_id, mark) VALUES  (4, 3, 4);");
+            statement.executeUpdate("INSERT INTO progress (student_id, subject_id, mark) VALUES  (3, 1, 3);");
 
 //
 
