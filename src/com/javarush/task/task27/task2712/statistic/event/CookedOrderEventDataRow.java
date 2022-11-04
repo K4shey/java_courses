@@ -2,7 +2,6 @@ package com.javarush.task.task27.task2712.statistic.event;
 
 import com.javarush.task.task27.task2712.kitchen.Dish;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -22,4 +21,8 @@ public class CookedOrderEventDataRow implements EventDataRow {
         this.currentDate = new Date();
     }
 
+    @Override
+    public EventType getEventType() {
+        return EventType.COOKED_ORDER;
+    }
 }
