@@ -39,7 +39,7 @@ public class StatisticManager {
         }
 
         private void put(EventDataRow data) {
-            storage.get(data.getEventType()).add(data);
+            this.storage.get(data.getEventType()).add(data);
         }
     }
 }
