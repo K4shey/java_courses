@@ -31,7 +31,7 @@ public class Order {
         StringBuilder result = new StringBuilder("Your order: ");
         result.append(dishes.toString()).append(" of ");
         result.append(tablet.toString());
-        result.append(",cooking time " + Integer.toString(getTotalCookingTime()) + "min");
+        result.append(",cooking time " + Integer.toString(getTotalCookingTime()) + " min");
         return result.toString();
     }
 

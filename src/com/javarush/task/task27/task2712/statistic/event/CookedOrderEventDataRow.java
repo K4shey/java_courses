@@ -8,6 +8,17 @@ import java.util.List;
 public class CookedOrderEventDataRow implements EventDataRow {
 
     private String tabletName;
+
+    @Override
+    public Date getDate() {
+        return currentDate;
+    }
+
+    @Override
+    public int getTime() {
+        return cookingTimeSeconds;
+    }
+
     private String cookName;
     private int cookingTimeSeconds;
     private List<Dish> cookingDishes;
