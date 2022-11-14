@@ -14,7 +14,7 @@ public class Solution {
         List<String> result = new ArrayList<>();
         File[] files = new File(root).listFiles();
         for (File f : files) {
-            queue.add(f);
+             queue.add(f);
         }
 
         while (queue.size() > 0) {
