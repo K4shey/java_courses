@@ -19,16 +19,14 @@ public class Solution {
         searchFileVisitor.setPartOfName("amigo");
         searchFileVisitor.setPartOfContent("programmer");
         searchFileVisitor.setMinSize(500);
-        searchFileVisitor.setMaxSize(10000);
+        searchFileVisitor.setMaxSize(6000);
 
-        Files.walkFileTree(Paths.get("D:/SecretFolder"), searchFileVisitor);
+        Files.walkFileTree(Paths.get("D:/Downloads/task_3101"), searchFileVisitor);
 
         List<Path> foundFiles = searchFileVisitor.getFoundFiles();
         for (Path file : foundFiles) {
             System.out.println(file);
         }
-
-        FileVisitor
     }
 
 }
