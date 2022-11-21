@@ -1,7 +1,6 @@
 package com.javarush.task.task27.task2712.statistic;
 
 import com.javarush.task.task27.task2712.ConsoleHelper;
-import com.javarush.task.task27.task2712.ad.Advertisement;
 import com.javarush.task.task27.task2712.kitchen.Cook;
 import com.javarush.task.task27.task2712.statistic.event.CookedOrderEventDataRow;
 import com.javarush.task.task27.task2712.statistic.event.EventDataRow;
@@ -16,18 +15,6 @@ public class StatisticManager {
     private static StatisticManager instance;
     private StatisticManager.StatisticStorage statisticStorage = new StatisticStorage();
     private Set<Cook> cooks = new HashSet<>();
-//    private Map<Date, ArrayList<Long>> dailyProfit = new TreeMap<>(new Comparator<Date>() {
-//        @Override
-//        public int compare(Date o1, Date o2) {
-//            return o2.compareTo(o1);
-//        }
-//    });
-//    private Map<Date, List<String>> dailyCookTime = new TreeMap<>(new Comparator<Date>() {
-//        @Override
-//        public int compare(Date o1, Date o2) {
-//            return o2.compareTo(o1);
-//        }
-//    });
 
     private StatisticManager() {
 
@@ -65,11 +52,9 @@ public class StatisticManager {
         }
         double sumTotal = 0.0;
         for (Map.Entry<String, Double> element : tmpMap.entrySet()) {
-//            ConsoleHelper.writeMessage(element.getKey() + " - " + element.getValue());
             ConsoleHelper.writeMessage(String.format("%s - %.2f", element.getKey(), element.getValue()));
             sumTotal += element.getValue();
         }
-//        ConsoleHelper.writeMessage("Total - " + sumTotal);
         ConsoleHelper.writeMessage(String.format("Total - %.2f", sumTotal));
     }
 
@@ -84,7 +69,11 @@ public class StatisticManager {
             if (!dailyCookTime.containsKey(nextDay)) {
                 dailyCookTime.put(nextDay, new TreeMap<>());
             }
-            dailyCookTime.get(nextDay).put(dataRow.getCookName(), (int) Math.ceil(dataRow.getTime() / 60.0));
+            Map<String, Integer> tmpMap = dailyCookTime.get(nextDay);
+            if (!tmpMap.containsKey(dataRow.getCookName())) {
+                tmpMap.put(dataRow.getCookName(), 0);
+            }
+            tmpMap.put(dataRow.getCookName(), tmpMap.get(dataRow.getCookName()) + (int) Math.ceil(dataRow.getTime() / 60.0));
         }
 
         for (Map.Entry<String, Map<String, Integer>> element : dailyCookTime.entrySet()) {
