@@ -8,21 +8,12 @@ import java.util.List;
 public class CookedOrderEventDataRow implements EventDataRow {
 
     private String tabletName;
-
-    @Override
-    public Date getDate() {
-        return currentDate;
-    }
-
-    @Override
-    public int getTime() {
-        return cookingTimeSeconds;
-    }
-
     private String cookName;
     private int cookingTimeSeconds;
     private List<Dish> cookingDishes;
     private Date currentDate;
+
+
 
     public CookedOrderEventDataRow(String tabletName, String cookName, int cookingTimeSeconds, List<Dish> cookingDishes) {
         this.tabletName = tabletName;
@@ -35,5 +26,20 @@ public class CookedOrderEventDataRow implements EventDataRow {
     @Override
     public EventType getEventType() {
         return EventType.COOKED_ORDER;
+    }
+
+    @Override
+    public Date getDate() {
+        return currentDate;
+    }
+
+    @Override
+    public int getTime() {
+        return cookingTimeSeconds;
+    }
+
+
+    public String getCookName() {
+        return cookName;
     }
 }

@@ -5,10 +5,7 @@ import com.javarush.task.task27.task2712.statistic.StatisticManager;
 import com.javarush.task.task27.task2712.statistic.event.EventDataRow;
 import com.javarush.task.task27.task2712.statistic.event.VideoSelectedEventDataRow;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class AdvertisementManager {
     private final AdvertisementStorage storage = AdvertisementStorage.getInstance();
@@ -66,6 +63,7 @@ public class AdvertisementManager {
             }
         });
         EventDataRow event = new VideoSelectedEventDataRow(bestSet, bestValue, bestDuration);
+//        EventDataRow event = new VideoSelectedEventDataRow(bestSet, bestValue, bestDuration, new Date());
         StatisticManager.getInstance().register(event);
 
         for (Advertisement ad : bestSet) {
