@@ -51,7 +51,7 @@ public class StatisticManager {
 
     public void getAdvertisementProfit() {
         Map<EventType, List<EventDataRow>> events = statisticStorage.getStorage();
-        Map<String, Double> tmpMap = new TreeMap<>();
+        Map<String, Double> tmpMap = new TreeMap<>(Collections.reverseOrder());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyy", Locale.ENGLISH);
 
         for (EventDataRow event : events.get(EventType.SELECTED_VIDEOS)) {
@@ -65,16 +65,18 @@ public class StatisticManager {
         }
         double sumTotal = 0.0;
         for (Map.Entry<String, Double> element : tmpMap.entrySet()) {
-            ConsoleHelper.writeMessage(element.getKey() + " - " + element.getValue());
+//            ConsoleHelper.writeMessage(element.getKey() + " - " + element.getValue());
+            ConsoleHelper.writeMessage(String.format("%s - %.2f", element.getKey(), element.getValue()));
             sumTotal += element.getValue();
         }
-        ConsoleHelper.writeMessage("Total - " + sumTotal);
+//        ConsoleHelper.writeMessage("Total - " + sumTotal);
+        ConsoleHelper.writeMessage(String.format("Total - %.2f", sumTotal));
     }
 
     public void getCookWorkloading() {
 
         Map<EventType, List<EventDataRow>> events = statisticStorage.getStorage();
-        Map<String, Map<String, Integer>> dailyCookTime = new TreeMap<>();
+        Map<String, Map<String, Integer>> dailyCookTime = new TreeMap<>(Collections.reverseOrder());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyy", Locale.ENGLISH);
         for (EventDataRow event : events.get(EventType.COOKED_ORDER)) {
             CookedOrderEventDataRow dataRow = (CookedOrderEventDataRow) event;
