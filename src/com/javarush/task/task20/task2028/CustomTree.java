@@ -23,8 +23,7 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     }
 
     @Override
-    public String set(int index, String element)
-    {
+    public String set(int index, String element) {
         throw new UnsupportedOperationException();
     }
 
@@ -50,6 +49,23 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     @Override
     public int size() {
         return 0;
+    }
+
+    static class Entry<T> implements Serializable {
+        String elementName;
+        boolean availableToAddLeftChildren, availableToAddRightChildren;
+        Entry<T> parent, leftChild, rightChild;
+
+        public Entry(String elementName) {
+            this.elementName = elementName;
+            this.availableToAddLeftChildren = true;
+            this.availableToAddRightChildren = true;
+        }
+
+        public boolean isAvailableToAddChildren() {
+            return availableToAddLeftChildren || availableToAddRightChildren;
+        }
+
     }
 
 }
