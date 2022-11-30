@@ -11,6 +11,28 @@ import java.util.*;
 
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable {
 
+    CustomTree.Entry<String> root;
+
+    public CustomTree() {
+        this.root = new CustomTree.Entry<String>("Root_Element");
+    }
+
+    @Override
+    public boolean add(String s) {
+        Entry<String> rootElement = root;
+
+        if (rootElement.availableToAddLeftChildren) {
+            Entry<String> childElement = new Entry<>("Child_Left_Element");
+            childElement.parent = rootElement;
+            rootElement.leftChild = childElement;
+        } else if (rootElement.availableToAddRightChildren) {
+            Entry<String> childElement = new Entry<>("Child_Right_Element");
+            childElement.parent = rootElement;
+            rootElement.rightChild = childElement;
+        }
+
+        return true;
+    }
 
     @Override
     public void add(int index, String s) {
