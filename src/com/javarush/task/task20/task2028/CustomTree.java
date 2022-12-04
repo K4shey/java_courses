@@ -12,6 +12,7 @@ import java.util.*;
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable {
 
     CustomTree.Entry<String> root;
+    ArrayList<Entry> allElements = new ArrayList<>();
 
     public CustomTree() {
         this.root = new CustomTree.Entry<String>("0");
@@ -19,48 +20,27 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
 
     @Override
     public boolean add(String s) {
-//        Entry<String> currentElement = root;
-        Entry<String> childElement = new Entry<>(s);
-//
-//        Entry<String> childElement = new Entry<>("1");
-//        currentElement.leftChild = childElement;
-//        childElement.parent = currentElement.leftChild;
-//        currentElement.availableToAddLeftChildren = false;
-//
-//        childElement = new Entry<>("2");
-//        currentElement.rightChild = childElement;
-//        childElement.parent = currentElement.rightChild;
-//        currentElement.availableToAddRightChildren = false;
-//
-//        currentElement = root.leftChild;
-//
-//
-//        childElement = new Entry<>("3");
-//        currentElement.leftChild = childElement;
-//        childElement.parent = currentElement.leftChild;
-//        currentElement.availableToAddLeftChildren = false;
-//
-//        childElement = new Entry<>("4");
-//        currentElement.rightChild = childElement;
-//        childElement.parent = currentElement.rightChild;
-//        currentElement.availableToAddRightChildren = false;
-//
-//        currentElement = root.rightChild;
-//
-//
-//        childElement = new Entry<>("5");
-//        currentElement.leftChild = childElement;
-//        childElement.parent = currentElement.leftChild;
-//        currentElement.availableToAddLeftChildren = false;
 
-//        Queue<Entry<String>> queue = new PriorityQueue<>();
+        Entry<String> childElement = new Entry<>(s);
         Entry<String> nextEntry = null;
         Queue<Entry<String>> queue = new ArrayDeque<>();
         queue.add(root);
         while (!queue.isEmpty()) {
             nextEntry = queue.poll();
             if (nextEntry != null) {
-                System.out.print(nextEntry.elementName + " ");
+                if (nextEntry.availableToAddLeftChildren) {
+                    childElement.parent = nextEntry;
+                    nextEntry.leftChild = childElement;
+                    nextEntry.availableToAddLeftChildren = false;
+                    allElements.add(childElement);
+                    break;
+                } else if (nextEntry.availableToAddRightChildren) {
+                    childElement.parent = nextEntry;
+                    nextEntry.rightChild = childElement;
+                    nextEntry.availableToAddRightChildren = false;
+                    allElements.add(childElement);
+                    break;
+                }
                 if (nextEntry.leftChild != null) {
                     queue.add(nextEntry.leftChild);
                 }
@@ -69,28 +49,9 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
                 }
             }
         }
-        if (nextEntry.availableToAddLeftChildren) {
-            childElement.parent = nextEntry;
-            nextEntry.leftChild = childElement;
-            nextEntry.availableToAddLeftChildren = false;
-        } else if (nextEntry.availableToAddRightChildren) {
-            childElement.parent = nextEntry;
-            nextEntry.rightChild = childElement;
-            nextEntry.availableToAddRightChildren = false;
-        }
-        System.out.print(childElement.elementName);
-        System.out.println();
         return true;
     }
 
-
-    public void traversal(Entry<String> entry) {
-        Entry<String> currentElement = entry;
-        while (!currentElement.isAvailableToAddChildren()) {
-            currentElement = currentElement.leftChild;
-        }
-
-    }
 
     @Override
     public void add(int index, String s) {
@@ -128,43 +89,15 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
 
     @Override
     public int size() {
-     int size = -1;
-        Entry<String> nextEntry = null;
-        Queue<Entry<String>> queue = new ArrayDeque<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            nextEntry = queue.poll();
-            if (nextEntry != null) {
-                size++;
-                if (nextEntry.leftChild != null) {
-                    queue.add(nextEntry.leftChild);
-                }
-                if (nextEntry.rightChild != null) {
-                    queue.add(nextEntry.rightChild);
-                }
-            }
-        }
-        return size;
+        return allElements.size();
     }
 
     public String getParent(String s) {
-        String parent = "";
-        Entry<String> nextEntry = null;
-        Queue<Entry<String>> queue = new ArrayDeque<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            nextEntry = queue.poll();
-            if (nextEntry != null) {
-                if (nextEntry.elementName.equals(s)) {
-                    parent = nextEntry.parent.elementName;
-                    break;
-                }
-                if (nextEntry.leftChild != null) {
-                    queue.add(nextEntry.leftChild);
-                }
-                if (nextEntry.rightChild != null) {
-                    queue.add(nextEntry.rightChild);
-                }
+        String parent = null;
+        for (Entry nextEntry : allElements) {
+            if (nextEntry.elementName.equals(s)) {
+                parent = nextEntry.parent.elementName;
+                break;
             }
         }
         return parent;
@@ -184,37 +117,5 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
         public boolean isAvailableToAddChildren() {
             return availableToAddLeftChildren || availableToAddRightChildren;
         }
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
