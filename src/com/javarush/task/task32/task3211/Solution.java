@@ -15,11 +15,21 @@ public class Solution {
         oos.writeObject(new String("test string"));
         oos.flush();
         System.out.println(compareMD5(bos, "5a47d12a2e3f9fecf2d9ba1fd98152eb")); //true
-
     }
 
     public static boolean compareMD5(ByteArrayOutputStream byteArrayOutputStream, String md5) throws Exception {
-        return false;
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        messageDigest.update(byteArrayOutputStream.toByteArray());
+        byte[] digest = messageDigest.digest();
+        return bytesToHex(digest).equals(md5);
+    }
+
+    public static String bytesToHex(byte[] in) {
+        final StringBuilder builder = new StringBuilder();
+        for (byte b : in) {
+            builder.append(String.format("%02x", b));
+        }
+        return builder.toString();
     }
 }
 
