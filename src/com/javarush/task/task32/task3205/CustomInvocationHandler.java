@@ -14,6 +14,10 @@ public class CustomInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        return null;
+        Object result = null;
+        System.out.println(String.format("%s in", method.getName()));
+        result = method.invoke(someInterfaceWithMethods, args);
+        System.out.println(String.format("%s out", method.getName()));
+        return result;
     }
 }
