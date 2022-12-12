@@ -26,11 +26,14 @@ public class Solution {
         System.out.format("%b %b %b\n", isItem, isBig, isSmall);
     }
 
-    public <T extends Item> getProxy <T> (Class<T> clazz, Class<T> ... interfaces) {
-//        return (Proxy) Proxy.newProxyInstance(this.getClass().getClassLoader(), interfaces, new ItemInvocationHandler());
-        return (Class<T>) Proxy.newProxyInstance(this.getClassLoader(), interfaces, new ItemInvocationHandler());
+    public <T extends Item> T getProxy  (Class<T> clazz, Class<?> ... interfaces) {
+        Class<?> [] newArray = new Class[interfaces.length + 1];
+        newArray[0] = clazz;
+        for (int i = 1; i < newArray.length ; i++) {
+            newArray[i] = interfaces[i - 1];
+        }
+        return (T) Proxy.newProxyInstance(this.getClass().getClassLoader(),  newArray, new ItemInvocationHandler());
     }
-
 }
 
 

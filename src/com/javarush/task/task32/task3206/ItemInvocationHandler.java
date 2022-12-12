@@ -9,7 +9,6 @@ import java.lang.reflect.Proxy;
 public class ItemInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("ok");
         return null;
    }
 
