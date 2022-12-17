@@ -9,6 +9,14 @@ public class Tetris {
 
     }
 
+    public Field getField() {
+        return field;
+    }
+
+    public Figure getFigure() {
+        return figure;
+    }
+
 }
 
 
