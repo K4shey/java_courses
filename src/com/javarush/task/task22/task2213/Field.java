@@ -23,4 +23,20 @@ public class Field {
         this.height = height;
         this.matrix = new int[height][width];
     }
+
+    public void print() {
+
+    }
+
+    public void removeFullLines() {
+
+    }
+
+    public Integer getValue(int x, int y){
+        return null;
+    }
+
+    public void setValue(int x, int y, int value) {
+        matrix[y][x] = value;
+    }
 }
