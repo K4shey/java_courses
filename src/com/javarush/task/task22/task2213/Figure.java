@@ -25,19 +25,28 @@ public class Figure {
     }
 
     public void up() {
-
+        if (isCurrentPositionAvailable()) {
+            y--;
+        }
     }
 
     public void down() {
-
+        if (isCurrentPositionAvailable()) {
+            y++;
+        }
     }
 
     public void left() {
+        if (isCurrentPositionAvailable()) {
+            x--;
+        }
 
     }
 
     public void right() {
-
+        if (isCurrentPositionAvailable()) {
+            x++;
+        }
     }
 
     public void rotate() {
