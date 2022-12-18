@@ -80,13 +80,18 @@ public class Tetris {
      */
     public void step() {
         //опускам фигурку вниз
-
+        figure.down();
         //если разместить фигурку на текущем месте невозможно:
-        //поднимаем обратно
-        //приземляем
-        //удаляем заполненные линии
-        //создаем новую фигурку
-
+        if (!figure.isCurrentPositionAvailable()) {
+            //поднимаем обратно
+            figure.up();
+            //приземляем
+            figure.landed();
+            //удаляем заполненные линии
+            field.removeFullLines();
+            //создаем новую фигурку
+            figure = FigureFactory.createRandomFigure(field.getWidth() / 2, 0);
+        }
     }
 
     /**
